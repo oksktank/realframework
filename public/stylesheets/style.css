@@ -1,0 +1,19 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+.cocos2d-app {
+    border: 1px solid #000;
+    width: 640px;
+    height: 480px;
+    display: block;
+    margin: 0 auto;
+    -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow:    0 3px 10px rgba(0, 0, 0, 0.75);
+    -o-box-shadow:      0 3px 10px rgba(0, 0, 0, 0.75);
+    box-shadow:         0 3px 10px rgba(0, 0, 0, 0.75);
+}

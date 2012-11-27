@@ -1,0 +1,30 @@
+extends layout
+block head
+  script
+    Real.RoomList.init({renderTo:'#roomListDiv',roomList:!{roomList}});
+    function login(){
+        var id=$("#userName").val();
+        $.ajax({
+            type:'POST',
+            url:'/user/login',
+            data:{
+                id:id
+            },
+            success:function(data){
+                alert('logged in!'+data);
+                var socket=Real.getSocket();
+                socket.emit('signIn',data);
+            }
+        });
+    }
+    console.log(Real.getSocket().socket);
+block content
+  h1= title
+  p Welcome to #{title}
+  p
+    input(type='text', id='userName')
+    input(type='button',name='signUser',value='로그인',onClick='login()')
+  p
+    input(type='text', id='roomName')
+    input(type='button',name='makeRoom',value='방생성',onClick='Real.RoomList.makeRoom("#roomName")')
+  div(id='roomListDiv')

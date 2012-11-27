@@ -1,0 +1,87 @@
+extends layout
+block head
+    style
+          #wrap{
+            width: 1100px; margin: 0 auto;
+            overflow: hidden;
+            border: 1px solid black;
+          }
+          #gameDiv{
+            width: 450px;
+            height: 300px;
+            float: left;
+            border: 1px solid black;
+          }
+          #scoreDiv{
+            width: 450px;
+            height: 300px;
+            float: left;
+            border: 1px solid black;
+          }
+          #eventDiv{
+                  width: 450px;
+                  height: 300px;
+                  float: left;
+                  border: 1px solid black;
+          }
+          #chatDiv
+          {
+                        width: 450px;
+                        height: 300px;
+                        float: left;
+                        border: 1px solid black;
+          }
+    script
+      Real.Room.init({roomName:'#{roomName}',onJoinUser:function(dat){
+          console.log('join:');
+          console.log(dat);
+          Real.Chat.onUserJoin(dat);
+          Real.Score.onUserJoin(dat);
+      },onLeaveUser:function(dat){
+          console.log('leave:'+dat);
+          Real.Chat.onUserLeave(dat);
+          Real.Score.onUserLeave(dat);
+      }});
+      Real.Score.init({ roomName:'#{roomName}',renderTo:'#scoreDiv', nameTitle:'이름', scoreTitle:'점수'});
+      Real.Event.init({ roomName:'#{roomName}',renderTo:'#eventDiv'});
+      Real.Chat.init({renderTo:'#chat', roomName:'#{roomName}', width:'440', height:'230'});
+      $(function(){
+         $('#sendScore').click(function(){
+            Real.Score.sendScore($('#score').val());
+         });
+         $('#sendEvent').click(function(){
+            Real.Event.sendEvent($('#name').val(), $('#event').val());
+         });
+
+      });
+
+block content
+
+  h1= title
+  p 방이름: #{roomName}
+  hr
+  방
+  input(type='text',id='room',value=roomName)
+  hr
+
+  hr
+  div(id='wrap')
+      div(id='gameDiv')
+           div(class='cocos2d-app')
+            script(src='/build/bird_catch/init.js', type='text/javascript')
+           'gameDiv'
+           br
+           이름
+           input(type='text',id='name')
+           br
+           점수
+           input(type='text',id='score')
+           input(type='button',id='sendScore',value='점수전송')\
+           br
+           이밴트
+           input(type='text',id='event')
+           input(type='button',id='sendEvent',value='이벤트전송')
+      div(id='scoreDiv')
+      div(id='eventDiv')
+      div(id='chatDiv')
+          div(id='chat')

@@ -1,0 +1,13 @@
+doctype 5
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    script(src='/javascripts/jquery-1.8.3.min.js')
+    script(src='/socket.io/socket.io.js')
+    script(src='/javascripts/Real.js')
+    block head
+  body
+    block content
+    input(type='hidden',value='#{session.loginId}',id='loginUserId')
