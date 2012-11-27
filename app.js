@@ -2,7 +2,7 @@
 /**
  * Module dependencies.
  */
-
+/* author : 이한솔 김상훈 김원석 노원우 */
 var express = require('express')
     ,socketio=require('socket.io')
   , routes = require('./routes')
