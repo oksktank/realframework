@@ -71,10 +71,10 @@
                     });
                     if(Real.Room.roomName!=''){
                         Real.User.getLoginUser(function(data){
-                           if(data!=undefined){
-                               var id=data.id;
-                               Real.Room.joinRoom({id:id,roomName:Real.Room.roomName},socket);
-                           }
+                            if(data!=undefined){
+                                var id=data.id;
+                                Real.Room.joinRoom({id:id,roomName:Real.Room.roomName},socket);
+                            }
                         });
 
                     }
@@ -188,14 +188,14 @@
             appendScoreTable:function(){
                 var render=$(Real.Score.renderTo);
                 $('<table id="scoreTable"></table>').appendTo(render);
-                $('<tr><th>'+Real.Score.nameTitle+'</td><td>'+Real.Score.scoreTitle+'</th></tr>').appendTo('#scoreTable');
+                $('<tr style="height: 30px"><th>'+Real.Score.nameTitle+'</td><td>'+Real.Score.scoreTitle+'</th></tr>').appendTo('#scoreTable');
                 /*for(var i =0;i<4;i++){
-                    $('<tr id=player'+(i+1)+'><td >player'+(i+1)+'</td><td id=pscore>'+0+'</td></tr>').appendTo('#scoreTable');
-                } */
+                 $('<tr id=player'+(i+1)+'><td >player'+(i+1)+'</td><td id=pscore>'+0+'</td></tr>').appendTo('#scoreTable');
+                 } */
                 Real.Room.getInitialUserList(Real.Score.roomName,function(data){
                     jQuery.each(data, function(i, val) {
-                       $('<tr id='+i+'><td >'+val.id+'</td><td id=pscore>'+0+'</td></tr>').appendTo('#scoreTable');
-                       Real.Score.sendScore(0,i);
+                        $('<tr id='+i+'><td >'+val.id+'</td><td id=pscore>'+0+'</td></tr>').appendTo('#scoreTable');
+                        Real.Score.sendScore(0,i);
                     });
 
                 });
@@ -212,7 +212,7 @@
                 }
             },
             onUserJoin:function(data){
-                $('<tr id='+data.socketId+'><td >'+data.user.id+'</td><td id=pscore>'+0+'</td></tr>').appendTo('#scoreTable');
+                $('<tr  id='+data.socketId+'><td >'+data.user.id+'</td><td id=pscore>'+0+'</td></tr>').appendTo('#scoreTable');
             },
             onUserLeave:function(data){
                 $('#scoreTable #'+data.socketId).remove();
@@ -221,8 +221,8 @@
         Event:{
             roomName:'',
             renderTo:'',//default
-            width:'90%',
-            height:'90%',
+            width:'100%',
+            height:'100%',
             textAlign:'center',
             init:function(data){
                 $(function(){
@@ -241,7 +241,7 @@
                     socket.on('eventServer',function(data){
                         console.log('client receive data:', data);
 
-                        $('<div id="eventSingle" style="border: 1px solid black; height: 30px">'+data.name+': '+data.event+'</div>').appendTo('#eventBox');
+                        $('<div id="eventSingle" style="border-bottom: 1px solid black; height: 30px">'+data.name+': '+data.event+'</div>').appendTo('#eventBox');
                         $('#eventBox').scrollTop($('#eventBox')[0].scrollHeight);
                     });
                 });
@@ -249,7 +249,7 @@
             setStyle:function(){
                 $('#eventBox').css('margin','0 auto');
                 $('#eventBox').css('overflow-y','scroll');
-                $('#eventBox').css('border','10px solid blue');
+                $('#eventBox').css('border','0');
                 $('#eventBox').css('width',Real.Event.width);
                 $('#eventBox').css('height',Real.Event.height);
                 $('#eventBox').css('text-align',Real.Event.textAlign);
