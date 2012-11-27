@@ -12,6 +12,8 @@ var cocos  = require('cocos2d')   // Import the cocos2d module
   , geo    = require('geometry')  // Import the geometry module
   , ccp    = geo.ccp              // Short hand to create points
 
+var Real = window.parent.Real
+
 // Convenient access to some constructors
 var Layer    = nodes.Layer
   , Scene    = nodes.Scene
@@ -207,9 +209,12 @@ function ReadyForGame()
 ReadyForGame.inherit(Layer,{
     timer: function(delay)
     {
-        if(!this.T)this.T = 0
-        this.T += delay
-        if(this.T > 5)
+        if(!this.container)
+        {
+            this.container = false
+        }
+        Real.Game.receiveEvent('gameStart', this.container)
+        if(this.container)
         {
             var scene = new Scene()
             var layer = new BirdCatch()

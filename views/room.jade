@@ -45,13 +45,17 @@ block head
       Real.Score.init({ roomName:'#{roomName}',renderTo:'#scoreDiv', nameTitle:'이름', scoreTitle:'점수'});
       Real.Event.init({ roomName:'#{roomName}',renderTo:'#eventDiv'});
       Real.Chat.init({renderTo:'#chat', roomName:'#{roomName}', width:'400', height:'230'});
-      Real.Game.init({ roomName:'#{roomName}'})
+      Real.Game.init({ roomName:'#{roomName}'});
       $(function(){
          $('#sendScore').click(function(){
             Real.Score.sendScore($('#score').val());
          });
          $('#sendEvent').click(function(){
             Real.Event.sendEvent($('#name').val(), $('#event').val());
+         });
+         $('#gameStart').click(function(){
+            Real.Game.sendEvent('gameStart', {val: true});
+            console.log('sending game Start message');
          });
 
       });
@@ -77,11 +81,12 @@ block content
            br
            점수
            input(type='text',id='score')
-           input(type='button',id='sendScore',value='점수전송')\
+           input(type='button',id='sendScore',value='점수전송')
            br
            이밴트
            input(type='text',id='event')
            input(type='button',id='sendEvent',value='이벤트전송')
+           input(type='button',id='gameStart',value='게임시작')
       div(id='scoreDiv')
       div(id='eventDiv')
       div(id='chatDiv')

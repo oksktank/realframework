@@ -28,7 +28,6 @@
                 $(function(){
                     if(data.roomName) Real.Game.roomName=data.roomName;
                     var socket=Real.getSocket();
-                    Real.Game.receiveEvent(socket);
                 });
             },
             startGame:function(){
@@ -38,8 +37,6 @@
             sendEvent:function(eventName,data){
                 var socket=Real.getSocket();
                 socket.emit(eventName,data);
-
-
             }
         },
         User:{
