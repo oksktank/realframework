@@ -2,6 +2,9 @@
 __jah__.resources["/main.js"] = {data: function (exports, require, module, __filename, __dirname) {
 "use strict"  // Use strict JavaScript mode
 
+
+// Powered By Wonwoo Ro, 2012 with Cocos2D
+
 // Pull in the modules we're going to use
 var cocos  = require('cocos2d')   // Import the cocos2d module
   , nodes  = cocos.nodes          // Convenient access to 'nodes'
