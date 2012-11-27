@@ -14,6 +14,26 @@
             }
             return Real.socket;
         },
+        Game:{
+            roomName:'',
+            receiveEvent:function(socket){},
+            init:function(data){
+                $(function(){
+                    if(data.roomName) Real.Game.roomName=data.roomName;
+                    var socket=Real.getSocket();
+                    Real.Game.receiveEvent(socket);
+                });
+            },
+            startGame:function(){
+
+            },
+            sendEvent:function(eventName,data){
+                var socket=Real.getSocket();
+                socket.emit(eventName,data);
+
+
+            }
+        },
         User:{
             getLoginUser:function(func){
                 $.ajax({
