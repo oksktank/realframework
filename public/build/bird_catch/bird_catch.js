@@ -343,7 +343,7 @@ BirdCatch.inherit(Layer, {
         if(this.keyMap[32] && this.BulletDelay > 0.5)
         {
             //Originally sends fire request to server
-            var gunshotSFX = new Audio('/__jah__/assets/sfx/gunshot.wav')
+            var gunshotSFX = new Audio('/build/__jah__/assets/sfx/gunshot.wav')
             gunshotSFX.play()
             p_x = this.Players[this.me_num].sprite.position.x - 5
             p_y = this.Players[this.me_num].sprite.position.y + 30

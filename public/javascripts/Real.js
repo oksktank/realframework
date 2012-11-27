@@ -16,7 +16,9 @@
         },
         Game:{
             roomName:'',
-            receiveEvent:function(socket){},
+            receiveEvent:function(socket){
+
+            },
             init:function(data){
                 $(function(){
                     if(data.roomName) Real.Game.roomName=data.roomName;
@@ -25,7 +27,8 @@
                 });
             },
             startGame:function(){
-
+                var socket = Real.getSocket()
+                socket.emit('gameStart')
             },
             sendEvent:function(eventName,data){
                 var socket=Real.getSocket();

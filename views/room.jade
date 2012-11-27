@@ -45,6 +45,7 @@ block head
       Real.Score.init({ roomName:'#{roomName}',renderTo:'#scoreDiv', nameTitle:'이름', scoreTitle:'점수'});
       Real.Event.init({ roomName:'#{roomName}',renderTo:'#eventDiv'});
       Real.Chat.init({renderTo:'#chat', roomName:'#{roomName}', width:'400', height:'230'});
+      Real.Game.init({ roomName:'#{roomName}'})
       $(function(){
          $('#sendScore').click(function(){
             Real.Score.sendScore($('#score').val());
