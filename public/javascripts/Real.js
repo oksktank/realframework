@@ -174,8 +174,8 @@ function pickOut(array, idx)
             renderTo:'',//default
             nameTitle:'NAME',
             scoreTitle:'SCORE',
-            width:'98%',
-            height:'98%',
+            width:'100%',
+            height:'100%',
             textAlign:'center',
             init:function(data){
                 $(function(){

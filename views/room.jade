@@ -2,34 +2,35 @@ extends layout
 block head
     style
           #wrap{
-            width: 1200px; margin: 0 auto;
-            overflow: hidden;
-            border: 1px solid black;
+            width: 1110px; margin: 0 auto;
+            overflow: hidden;;
           }
           #gameDiv{
-            width: 700px;
-            height: 700px;
+            width: 650px;
+            height: 490px;
             float: left;
-            border: 1px solid black;
           }
           #scoreDiv{
             width: 400px;
             height: 200px;
             float: left;
-            border: 1px solid black;
           }
           #eventDiv{
-                  width: 400px;
+                  width: 645px;
                   height: 200px;
                   float: left;
-                  border: 1px solid black;
           }
           #chatDiv
           {
                         width: 400px;
-                        height: 300px;
+                        height: 290px;
                         float: left;
-                        border: 1px solid black;
+          }
+          #gameStart{
+                margin-top: 50px;
+                margin-left: 0px;
+                height: 100px;
+                width: 200px;
           }
     script
       Real.Room.init({roomName:'#{roomName}',onJoinUser:function(dat){
@@ -64,31 +65,13 @@ block head
 block content
 
   h1= title
-  p 방이름: #{roomName}
-  hr
-  방
-  input(type='text',id='room',value=roomName)
-  hr
-
-  hr
   div(id='wrap')
       div(id='gameDiv')
            div(class='cocos2d-app')
             script(src='/build/bird_catch/init.js', type='text/javascript')
-           'gameDiv'
-           br
-           이름
-           input(type='text',id='name')
-           br
-           점수
-           input(type='text',id='score')
-           input(type='button',id='sendScore',value='점수전송')
-           br
-           이밴트
-           input(type='text',id='event')
-           input(type='button',id='sendEvent',value='이벤트전송')
-           input(type='button',id='gameStart',value='게임시작')
       div(id='scoreDiv')
-      div(id='eventDiv')
       div(id='chatDiv')
-          div(id='chat')
+        div(id='chat')
+      div(id='eventDiv')
+      input(type='button',class='gradationBlue1',id='gameStart',value='Game Start!')
+      input(type='button',class='gradationBlue1',id='gameStart',value='Leave Room!')
