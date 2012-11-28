@@ -265,8 +265,7 @@ function pickOut(array, idx)
                     var socket = Real.getSocket();//소켓 연결
                     socket.on('eventServer',function(data){
                         console.log('client receive data:', data);
-                        if(data.src)
-                            $('<embed hidden="true" src='+data.src+'>').appendTo('#eventBox');
+
                         $('<button type="button" class="btn btn-large btn-block btn-primary">'+data.name+': '+data.event+'</button>').appendTo('#eventBox');
                         $('#eventBox').scrollTop($('#eventBox')[0].scrollHeight);
                     });
@@ -284,10 +283,10 @@ function pickOut(array, idx)
                 var render=$(Real.Event.renderTo);
                 $('<div id="eventBox"></div>').appendTo(render);
             },
-            sendEvent:function(name,event,src,room){
+            sendEvent:function(name,event,room){
 
                 var socket=Real.getSocket();
-                socket.emit('eventClient',{name: name,event: event,src: src,room: Real.Event.roomName});
+                socket.emit('eventClient',{name: name,event: event,room: Real.Event.roomName});
             }
         },
         Chat:{
