@@ -263,13 +263,10 @@
             this.Players = new Array()
             this.PlayerMoveStatus = new Array(); //0: stop 1: left 2: right
             this.keyMoveController = ''
-            this.me_num = 0 //In the real game, this value will be set by the server
-            this.me_name = 'Tester'
 
             //Set player sprites
-            this.Players = new Array()
             this.me_num = Real.Game.Me //In the real game, this value will be set by the server
-            this.me_name = 'Tester'
+            this.me_name = Real.Room.userList[Real.getSocket().socket.sessionid].id
 
             var NumOfPlayers = Real.Game.userList.length
 
@@ -474,7 +471,7 @@
                                 if(M.owner == this.me_num)
                                 {
                                     Real.Score.sendScore(1000)
-                                    Real.Event.sendEvent('','황금새를 처치하였습니다!')
+                                    Real.Event.sendEvent(this.me_name,'황금새를 처치하였습니다!')
                                 }
                                 this.addChild(Score_Effect(B.sprite.position, this,'1000'))
                             }
