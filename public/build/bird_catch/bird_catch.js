@@ -117,20 +117,20 @@
             for(var i = 0; i < num; i++)
             {
                 /*
-                p = Math.random();
-                if(p > 0.95)
-                {
-                    type = 1
-                    speed = Math.random() + 1
-                }
-                else
-                {
-                    type = 0
-                    speed = Math.random()*3 + 1
-                }
+                 p = Math.random();
+                 if(p > 0.95)
+                 {
+                 type = 1
+                 speed = Math.random() + 1
+                 }
+                 else
+                 {
+                 type = 0
+                 speed = Math.random()*3 + 1
+                 }
 
-                y = Math.floor(250 + Math.random()*200)
-                */
+                 y = Math.floor(250 + Math.random()*200)
+                 */
                 Birds[i] = new Bird(type[i], speed[i], y[i])
             }
         }
@@ -268,10 +268,10 @@
             this.me_num = Real.Game.Me //In the real game, this value will be set by the server
             this.me_name = Real.Room.userList[Real.getSocket().socket.sessionid].id
             /*
-            var lblPlayerName = new Label({string: this.me_name, fontSize: 20,fontColor:'#000000'})
-            lblPlayerName.scaleY = -1
-            lblPlayerName.position = ccp(28,-100)
-            */
+             var lblPlayerName = new Label({string: this.me_name, fontSize: 20,fontColor:'#000000'})
+             lblPlayerName.scaleY = -1
+             lblPlayerName.position = ccp(28,-100)
+             */
             var NumOfPlayers = Real.Game.userList.length
             var PlayerID, PlayerName
 
@@ -305,18 +305,18 @@
             //Render Player Moves/////////////////////////////////////
             Real.Game.receiveEvent('LetHimMoveLeft',function(data,th){
                 /*
-                th.p_num = data
-                th.Players[th.p_num].sprite.position.x = th.Players[th.p_num].sprite.position.x - 12;
-                */
+                 th.p_num = data
+                 th.Players[th.p_num].sprite.position.x = th.Players[th.p_num].sprite.position.x - 12;
+                 */
                 var p_num = data
                 th.PlayerMoveStatus[p_num] = 1
                 console.log(th.PlayerMoveStatus)
             },this)
             Real.Game.receiveEvent('LetHimMoveRight', function(data,th){
                 /*
-                th.p_num = data
-                th.Players[th.p_num].sprite.position.x = th.Players[th.p_num].sprite.position.x + 12;
-                */
+                 th.p_num = data
+                 th.Players[th.p_num].sprite.position.x = th.Players[th.p_num].sprite.position.x + 12;
+                 */
                 var p_num = data
                 th.PlayerMoveStatus[p_num] = 2
             },this)
@@ -326,13 +326,13 @@
             },this)
             //Render Player Fires//////////////////////////////////////
             Real.Game.receiveEvent('LetHimFire', function(data,th){
-                 var p_num = data
-                 var p_x = th.Players[p_num].sprite.position.x - 5
-                 var p_y = th.Players[p_num].sprite.position.y + 30
-                 var bull = new Bullet(p_num, p_x, p_y)
-                 th.addChild(bull.sprite)
-                 th.Bullets.push(bull)
-                 th.BulletDelay = 0
+                var p_num = data
+                var p_x = th.Players[p_num].sprite.position.x - 5
+                var p_y = th.Players[p_num].sprite.position.y + 30
+                var bull = new Bullet(p_num, p_x, p_y)
+                th.addChild(bull.sprite)
+                th.Bullets.push(bull)
+                th.BulletDelay = 0
             },this)
             //Synchronize Bird Death////////////////////////////////////
             Real.Game.receiveEvent('SyncBirdDeath', function(data,th){
@@ -382,7 +382,7 @@
 
                 if(this.BulletDelay > 0.5)
                 {
-                    
+                    this.BulletControl = true
                 }
 
                 //Set Move Delay
@@ -490,7 +490,7 @@
                                 if(M.owner == this.me_num)
                                 {
                                     Real.Score.sendScore(1000)
-                                    Real.Event.sendEvent(this.me_name,'황금새를 처치하였습니다!')
+                                    Real.Event.sendEvent(this.me_name,'황금새를 처치하였습니다!','/sample.mp3')
                                 }
                                 this.addChild(Score_Effect(B.sprite.position, this,'1000'))
                             }
