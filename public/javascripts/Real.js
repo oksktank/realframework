@@ -201,29 +201,25 @@ function pickOut(array, idx)
                 });
             },
             setStyle:function(){
-
                 $('#scoreTable').css('margin','0 auto');//테이블 중앙 정렬
                 $('#scoreTable').css('width',Real.Score.width);//넓이
                 $('#scoreTable').css('height',Real.Score.height);//높이
                 $('#scoreTable').css('text-align',Real.Score.textAlign);//택스트 중앙 정렬
-                $('#scoreTable').attr('border','1px solid black');
-
-                $('#scoreTable').css('border-collapse','separate');
-                $('#scoreTable').css('border-bottom','3px solid #8cb0c8');
-                $('#scoreTable tbody td, #scoreTable tbody th').css('background','#ADBBCA');
-
-
+                //$('#scoreTable').attr('border','1px solid black');
+                //$('#scoreTable').css('border-collapse','separate');
+                //$('#scoreTable').css('border-bottom','3px solid #8cb0c8');
+                //$('#scoreTable tbody td, #scoreTable tbody th').css('background','#ADBBCA');
             },
             appendScoreTable:function(){
                 var render=$(Real.Score.renderTo);
                 $('<table id="scoreTable"></table>').appendTo(render);
-                $('<tr style="height: 30px"><th>'+Real.Score.nameTitle+'</td><td>'+Real.Score.scoreTitle+'</th></tr>').appendTo('#scoreTable');
+                $('<tr class="gradationBlue1" style="color: #ffffff;" class="info"><th>'+Real.Score.nameTitle+'</th><th>'+Real.Score.scoreTitle+'</th></tr>').appendTo('#scoreTable');
                 /*for(var i =0;i<4;i++){
                  $('<tr id=player'+(i+1)+'><td >player'+(i+1)+'</td><td id=pscore>'+0+'</td></tr>').appendTo('#scoreTable');
                  } */
                 Real.Room.getInitialUserList(Real.Score.roomName,function(data){
                     jQuery.each(data, function(i, val) {
-                        $('<tr id='+i+'><td >'+val.id+'</td><td id=pscore>'+0+'</td></tr>').appendTo('#scoreTable');
+                        $('<tr class="gradationBlue2" id='+i+'><td >'+val.id+'</td><td id=pscore>'+0+'</td></tr>').appendTo('#scoreTable');
                         Real.Score.sendScore(0,i);
                     });
 
@@ -241,7 +237,7 @@ function pickOut(array, idx)
                 }
             },
             onUserJoin:function(data){
-                $('<tr  id='+data.socketId+'><td >'+data.user.id+'</td><td id=pscore>'+0+'</td></tr>').appendTo('#scoreTable');
+                $('<tr class="gradationBlue2" id='+data.socketId+'><td >'+data.user.id+'</td><td id=pscore>'+0+'</td></tr>').appendTo('#scoreTable');
             },
             onUserLeave:function(data){
                 $('#scoreTable #'+data.socketId).remove();
@@ -270,7 +266,7 @@ function pickOut(array, idx)
                     socket.on('eventServer',function(data){
                         console.log('client receive data:', data);
 
-                        $('<div id="eventSingle" style="border-bottom: 1px solid black; height: 30px">'+data.name+': '+data.event+'</div>').appendTo('#eventBox');
+                        $('<button type="button" class="btn btn-large btn-block btn-primary">'+data.name+': '+data.event+'</button>').appendTo('#eventBox');
                         $('#eventBox').scrollTop($('#eventBox')[0].scrollHeight);
                     });
                 });
