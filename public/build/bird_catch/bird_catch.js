@@ -354,6 +354,10 @@
             },
             keyUp: function(evt)
             {
+                if(this.keyMap[32] == true)
+                {
+                    Real.Game.sendEvent('LetMeFire', this.me_num)
+                }
                 this.keyMap[evt.keyCode] = false
                 if(this.keyMoveController == true)
                 {
@@ -409,10 +413,10 @@
                 }
 
                 //Send Request Player Fires
-                if(this.keyMap[32] && this.BulletDelay > 0.8)
+                if(this.keyMap[32] && this.BulletDelay > 0.5)
                 {
                     //Originally sends fire request to server
-                    Real.Game.sendEvent('LetMeFire', this.me_num)
+                    //Real.Game.sendEvent('LetMeFire', this.me_num)
                 }
                 //Player Moves......
                 for(var i = 0; i < this.Players.length; i++)
