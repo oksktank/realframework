@@ -13,7 +13,8 @@ var express = require('express')
     ,util=require('./routes/util')
     ,room=require('./routes/room')
     , config = require('./config');
-console.log(config.config);
+
+
 var app = express();
 var RedisStore = require('connect-redis')(express);
 var redis=new RedisStore({host:'yog.io',pass:'ekfrrhrl0'});
@@ -67,14 +68,10 @@ function pickOut(array, idx)
 var player = {};
 var loginUserList = {};
 io.on('connection',function(socket){
-    console.log('connection: user connected');
     socket.on('disconnect',function(){
        socket.get('room',function(err,room){
-           console.log('connection: user disconnected(room:'+room+')');
            if(room!=null){
-               console.log(socket.id);
 
-               console.log(roomJson[room].userList);
                //////////////
                var index;
                for(var i = 0; i < roomJson[room].playerStack.length; i++)
@@ -86,7 +83,6 @@ io.on('connection',function(socket){
                    }
                }
                roomJson[room].playerStack = pickOut(roomJson[room].playerStack,index);
-               console.log(roomJson[room].playerStack)
                //////////////
                io.sockets.in(room).emit('leaveUser',{socketId:socket.id,user:roomJson[room].userList[socket.id]});
                delete roomJson[room].userList[socket.id];
@@ -95,9 +91,7 @@ io.on('connection',function(socket){
     });
     socket.on('signIn',function(loginUser){
         var id=loginUser.id;
-        console.log('user: set user '+id);
         loginUserList[id] =  loginUser;
-        console.log(loginUserList);
     });
     socket.on('makeRoom',function(roomName){
         addRoom(roomName);
@@ -114,15 +108,11 @@ io.on('connection',function(socket){
             socket.join(roomName);
             roomJson[roomName].userList[socket.id]=loginUserList[id];
             roomJson[roomName].playerStack.push(socket.id);
-            console.log('방의 유저'+id);
-            console.log(roomJson[roomName].userList);
             io.sockets.in(roomName).emit('joinUser',{socketId:socket.id,user:loginUserList[id],CurrentPlayerStack: roomJson[roomName].playerStack});
         }
 
     });
     socket.on('leaveRoom',function(data){
-        console.log('퇴장');
-        console.log('퇴장할 방'+data);
         socket.leave(data);
     });
     //이벤트 스코어
@@ -145,12 +135,10 @@ io.on('connection',function(socket){
         }
 
         player[data.room]['player'+nowPlayer.name]=nowPlayer;
-        console.log(player)
         io.sockets.in(data.room).emit('scoreServer', nowPlayer);
     });
     //이벤트
     socket.on('eventClient', function(data){
-        console.log('client send data:', data);
 
         io.sockets.in(data.room).emit('eventServer', data);
     });

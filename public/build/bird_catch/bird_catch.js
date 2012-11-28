@@ -471,7 +471,7 @@
                                 if(M.owner == this.me_num)
                                 {
                                     Real.Score.sendScore(1000)
-                                    Real.Event.sendEvent(this.me_name,'황금새를 처치하였습니다!','/sample2.wav')
+                                    Real.Event.sendEvent(this.me_name,'황금새를 처치하였습니다!')
                                 }
                                 this.addChild(Score_Effect(B.sprite.position, this,'1000'))
                             }
