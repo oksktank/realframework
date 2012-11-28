@@ -47,7 +47,7 @@ var server=http.createServer(app).listen(app.get('port'), function(){
 });
 var io=socketio.listen(server);
 var roomJson={};
-
+io.set('log level', 1);
 //각 방에 player stack을 추가함.
 function addRoom(roomName){
     if(roomJson[roomName]==undefined){
@@ -129,7 +129,6 @@ io.on('connection',function(socket){
     ////////원석//////////////
     //스코어
     socket.on('scoreClient', function(data){
-        console.log('client send data:', data);
 
         var nowRoom=player[data.room];
         if(nowRoom==undefined){
