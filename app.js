@@ -47,13 +47,24 @@ var server=http.createServer(app).listen(app.get('port'), function(){
 });
 var io=socketio.listen(server);
 var roomJson={};
+
+//각 방에 player stack을 추가함.
 function addRoom(roomName){
     if(roomJson[roomName]==undefined){
-        roomJson[roomName]={name:roomName,maxUser:4,makeTime:'',userList:{}};
+        roomJson[roomName]={name:roomName,maxUser:4,makeTime:'',userList:{},/*여기*/playerStack:new Array()};
         io.sockets.emit('roomAdded',{roomName:roomName});
     }
 }
-var player={};
+
+//array 에서 해당 주소를 pick out 하는 함수
+//player 목록 관리에 필요함
+function pickOut(array, idx)
+{
+    var array1 = array.slice(0, idx)
+    var array2 = array.slice(idx+1,array.length)
+    return array1.concat(array2)
+}
+var player = {};
 var loginUserList = {};
 io.on('connection',function(socket){
     console.log('connection: user connected');
@@ -64,6 +75,19 @@ io.on('connection',function(socket){
                console.log(socket.id);
 
                console.log(roomJson[room].userList);
+               //////////////
+               var index;
+               for(var i = 0; i < roomJson[room].playerStack.length; i++)
+               {
+                   if(roomJson[room].playerStack[i] == socket.id)
+                   {
+                       index = i;
+                       break;
+                   }
+               }
+               roomJson[room].playerStack = pickOut(roomJson[room].playerStack,index);
+               console.log(roomJson[room].playerStack)
+               //////////////
                io.sockets.in(room).emit('leaveUser',{socketId:socket.id,user:roomJson[room].userList[socket.id]});
                delete roomJson[room].userList[socket.id];
            }
@@ -89,9 +113,10 @@ io.on('connection',function(socket){
             socket.set('room',roomName);
             socket.join(roomName);
             roomJson[roomName].userList[socket.id]=loginUserList[id];
+            roomJson[roomName].playerStack.push(socket.id);
             console.log('방의 유저'+id);
             console.log(roomJson[roomName].userList);
-            io.sockets.in(roomName).emit('joinUser',{socketId:socket.id,user:loginUserList[id]});
+            io.sockets.in(roomName).emit('joinUser',{socketId:socket.id,user:loginUserList[id],CurrentPlayerStack: roomJson[roomName].playerStack});
         }
 
     });
@@ -155,8 +180,54 @@ io.on('connection',function(socket){
     //게임 관련 부분
     //스타트 요청 수신
     socket.on('LetMeStart', function(data){
-        io.sockets.in(data.room).emit('gameStart', 1)
-    })
+        io.sockets.in(data.room).emit('gameStart', 1);
+    });
+
+    socket.on('LetMeMoveRight', function(data){
+        var num = data.val;
+        io.sockets.in(data.room).emit('LetHimMoveRight', num);
+    });
+    socket.on('LetMeMoveLeft', function(data){
+        var num = data.val;
+        io.sockets.in(data.room).emit('LetHimMoveLeft', num);
+    });
+    socket.on('LetMeFire', function(data){
+       var num = data.val;
+        io.sockets.in(data.room).emit('LetHimFire', num);
+    });
+    socket.on('BirdDied', function(data){
+       var send = data.val;
+       io.sockets.in(data.room).emit('SyncBirdDeath', send);
+    });
+    /*
+    socket.on('GiveMeBirds', function(data){
+
+        var p;
+
+        var Speeds = {};
+        var Types = {};
+        var Ys = {};
+
+        for(var i = 0; i < 10; i++)
+        {
+            p = Math.random();
+            if(p > 0.95)
+            {
+                Types[i] = 1;
+                Speeds[i] = Math.random() * 2 + 1;
+            }
+            else
+            {
+                Types[i] = 0;
+                Speeds[i] = Math.random() * 3 + 1;
+            }
+
+            Ys[i] = Math.floor(250 + Math.random()*200)
+        }
+
+        io.sockets.in(data.room).emit('BirdProperties', {Speeds:Speeds, Types: Types, Ys:Ys});
+
+    });*/
 
 });
 app.get('/', routes.index);

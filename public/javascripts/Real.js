@@ -5,6 +5,16 @@
  * Time: 오후 3:24
  * To change this template use File | Settings | File Templates.
  */
+
+//array 에서 해당 주소를 pick out 하는 함수
+//player 목록 관리에 필요함
+function pickOut(array, idx)
+{
+    var array1 = array.slice(0, idx)
+    var array2 = array.slice(idx+1,array.length)
+    return array1.concat(array2)
+}
+
 (function(){
     var Real={
         socket:undefined,
@@ -16,11 +26,14 @@
         },
         Game:{
             roomName:'',
-            receiveEvent:function(eventName){
+            userList:new Array(),
+            Me:'',
+            receiveEvent:function(eventName, func,th){
                 var socket = Real.getSocket()
+
                 socket.on(eventName, function(data){
-                    console.log(eventName + ' : on')
-                    return data;
+                    console.log(eventName + ' : on');
+                    func(data,th);
                 })
             },
             init:function(data){
@@ -29,12 +42,23 @@
                     var socket=Real.getSocket();
                 });
             },
-            startGame:function(){
-                var socket = Real.getSocket()
-                socket.emit('gameStart')
+            onUserJoin:function(data){
+                Real.Game.userList = data.CurrentPlayerStack;
+                var socket = Real.getSocket();
+                for(var i = 0; i < Real.Game.userList.length; i++)
+                {
+                    if(Real.Game.userList[i] == socket.socket.sessionid) break;
+                }
+                Real.Game.Me = i;
+            },
+            onUserLeave:function(data){
+                for(var i = 0; i < Real.Game.userList.length; i++)
+                {
+                    if(Real.Game.userList[i] == data.id) break;
+                }
+                Real.Game.userList = pickOut(Real.Game.userList, i);
             },
             sendEvent:function(eventName,data){
-                //시발 왜 안됨
                 var socket=Real.getSocket();
                 socket.emit(eventName,{room: Real.Game.roomName, val: data});
             }
