@@ -267,14 +267,26 @@
             //Set player sprites
             this.me_num = Real.Game.Me //In the real game, this value will be set by the server
             this.me_name = Real.Room.userList[Real.getSocket().socket.sessionid].id
-
+            /*
+            var lblPlayerName = new Label({string: this.me_name, fontSize: 20,fontColor:'#000000'})
+            lblPlayerName.scaleY = -1
+            lblPlayerName.position = ccp(28,-100)
+            */
             var NumOfPlayers = Real.Game.userList.length
+            var PlayerID, PlayerName
 
             for(var i = 0; i < NumOfPlayers; i++)
             {
-                this.Players[i] = new Player(i, this.me_name)
+                PlayerID = Real.Game.userList[i];
+                PlayerName = new Label({string: Real.Room.userList[PlayerID].id, fontSize:16,fontColor:'#000000'})
+                PlayerName.scaleY = -1
+                PlayerName.position = ccp(28, -100)
+                this.Players[i] = new Player(i, 'TEST')
                 this.addChild(this.Players[i].sprite)
+                this.Players[i].sprite.addChild(PlayerName)
             }
+
+            //this.Players[this.me_num].sprite.addChild(lblPlayerName)
 
             //Set Birds
             this.Birds = new Array()
@@ -286,6 +298,7 @@
 
             this.keyMap = {}
             this.Bullets = new Array
+            this.BulletControl = true
             this.player_num = 0;
 
 
@@ -367,6 +380,11 @@
                 }
                 this.BulletDelay += delay
 
+                if(this.BulletDelay > 0.5)
+                {
+                    
+                }
+
                 //Set Move Delay
                 if(!this.MoveDelay){
                     this.MoveDelay = 0
@@ -403,9 +421,10 @@
                 }
 
                 //Send Request Player Fires
-                if(this.keyMap[32] && this.BulletDelay > 0.5)
+                if(this.keyMap[32] && this.BulletControl == true)
                 {
                     Real.Game.sendEvent('LetMeFire', this.me_num)
+                    this.BulletControl = false
                     this.BulletDelay = 0
                 }
                 //Player Moves......
@@ -471,7 +490,7 @@
                                 if(M.owner == this.me_num)
                                 {
                                     Real.Score.sendScore(1000)
-                                    Real.Event.sendEvent(this.me_name,'황금새를 처치하였습니다!','/sample2.wav')
+                                    Real.Event.sendEvent(this.me_name,'황금새를 처치하였습니다!')
                                 }
                                 this.addChild(Score_Effect(B.sprite.position, this,'1000'))
                             }
