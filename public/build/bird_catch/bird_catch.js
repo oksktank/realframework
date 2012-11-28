@@ -354,9 +354,10 @@
             },
             keyUp: function(evt)
             {
-                if(this.keyMap[32] == true)
+                if(this.keyMap[32] == true && this.BulletDelay > 0.5)
                 {
                     Real.Game.sendEvent('LetMeFire', this.me_num)
+                    this.BulletDelay = 0
                 }
                 this.keyMap[evt.keyCode] = false
                 if(this.keyMoveController == true)
