@@ -212,6 +212,8 @@
                 var layer = new BirdCatch()
                 var director = Director.sharedDirector
 
+                Real.Event.sendEvent('','게임이 시작되었습니다!')
+
                 scene.addChild(layer)
                 director.replaceScene(scene)
             },this)
@@ -477,7 +479,7 @@
                                 if(M.owner == this.me_num)
                                 {
                                     Real.Score.sendScore(1000)
-                                    Real.Event.sendEvent('','Golden Bird Killed!')
+                                    Real.Event.sendEvent('','황금새를 처치하였습니다!')
                                 }
                                 this.addChild(Score_Effect(B.sprite.position, this,'1000'))
                             }
