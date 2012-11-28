@@ -298,7 +298,6 @@
 
             this.keyMap = {}
             this.Bullets = new Array
-            this.BulletControl = true
             this.player_num = 0;
 
 
@@ -380,11 +379,6 @@
                 }
                 this.BulletDelay += delay
 
-                if(this.BulletDelay > 0.5)
-                {
-                    this.BulletControl = true
-                }
-
                 //Set Move Delay
                 if(!this.MoveDelay){
                     this.MoveDelay = 0
@@ -421,10 +415,9 @@
                 }
 
                 //Send Request Player Fires
-                if(this.keyMap[32] && this.BulletControl == true)
+                if(this.keyMap[32] && this.BulletDelay > 0.5)
                 {
                     Real.Game.sendEvent('LetMeFire', this.me_num)
-                    this.BulletControl = false
                     this.BulletDelay = 0
                 }
                 //Player Moves......
