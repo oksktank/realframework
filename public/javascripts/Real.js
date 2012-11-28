@@ -35,6 +35,7 @@
                 socket.emit('gameStart')
             },
             sendEvent:function(eventName,data){
+                //시발 왜 안됨
                 var socket=Real.getSocket();
                 socket.emit(eventName,data);
             }
