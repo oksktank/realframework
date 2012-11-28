@@ -433,9 +433,7 @@ function pickOut(array, idx)
                             var socket=Real.getSocket();
                             console.log(socket.socket.sessionid);
                             socket.emit('message', {
-
                                 type: $('#select_obj').val(),
-                                socketId: socket.socket.sessionid,
                                 name:socket.socket.sessionid,
                                 message: str,
                                 date: new Date().toUTCString(),
