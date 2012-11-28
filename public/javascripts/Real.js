@@ -162,7 +162,7 @@ function pickOut(array, idx)
                 $('<tr><td><a href="/room/'+roomName+'">'+roomName+'</a></td></tr>').insertAfter('#roomTitleTr');
             },
             getTable:function(){
-                return '<table><tr id="'+Real.RoomList.defaultTitleTrId+'"><td>'+Real.RoomList.defaultTitleTd+'</td></tr></table>';
+                return '<table class="table table-hover"><tr id="'+Real.RoomList.defaultTitleTrId+'"><td>'+Real.RoomList.defaultTitleTd+'</td></tr></table>';
             },
             makeRoom:function(data){
                 var roomName=$(data).val();
