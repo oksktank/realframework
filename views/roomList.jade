@@ -22,9 +22,12 @@ block content
   h1= title
   p Welcome to #{title}
   p
-    input(type='text', id='userName')
-    input(type='button',name='signUser',value='로그인',onClick='login()')
+    div(class='input-append')
+        input(class='span2', id='userName',type='text')
+        button(class='btn',type='button',onClick='login()') 로그인
+
   p
-    input(type='text', id='roomName')
-    input(type='button',name='makeRoom',value='방생성',onClick='Real.RoomList.makeRoom("#roomName")')
+    div(class='input-append')
+        input(class='span2',type='text', id='roomName')
+        button(class='btn',name='makeRoom',onClick='Real.RoomList.makeRoom("#roomName")') 방생성
   div(id='roomListDiv')
