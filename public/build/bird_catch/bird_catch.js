@@ -369,7 +369,7 @@
 
                 //Set Bullet Delay
                 if(!this.BulletDelay){
-                    this.BulletDelay = 0
+                    this.BulletDelay = 1
                 }
                 this.BulletDelay += delay
 
@@ -417,11 +417,11 @@
                 //Player Moves......
                 for(var i = 0; i < this.Players.length; i++)
                 {
-                    if(this.PlayerMoveStatus[i] == 1)
+                    if(this.PlayerMoveStatus[i] == 1 && this.Players[i].sprite.position.x > 27)
                     {
                         this.Players[i].sprite.position.x = this.Players[i].sprite.position.x - 8
                     }
-                    else if(this.PlayerMoveStatus[i] == 2)
+                    else if(this.PlayerMoveStatus[i] == 2 && this.Players[i].sprite.position.x < 614)
                     {
                         this.Players[i].sprite.position.x = this.Players[i].sprite.position.x + 8
                     }
