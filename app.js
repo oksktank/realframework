@@ -2,7 +2,7 @@
 /**
  * Module dependencies.
  */
-/* author : 이한솔 김상훈 김원석 노원우 */
+/* author : 이한솔 김상훈z 김원석 노원우 */
 //git test
 var express = require('express')
     ,socketio=require('socket.io')
