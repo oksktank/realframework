@@ -369,7 +369,7 @@
 
                 //Set Bullet Delay
                 if(!this.BulletDelay){
-                    this.BulletDelay = 1
+                    this.BulletDelay = 0
                 }
                 this.BulletDelay += delay
 
@@ -409,7 +409,7 @@
                 }
 
                 //Send Request Player Fires
-                if(this.keyMap[32] && this.BulletDelay > 0.5)
+                if(this.keyMap[32] && this.BulletDelay > 0.8)
                 {
                     //Originally sends fire request to server
                     Real.Game.sendEvent('LetMeFire', this.me_num)
