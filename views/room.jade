@@ -58,6 +58,7 @@ block head
          });
          $('#gameStart').click(function(){
             Real.Game.sendEvent('LetMeStart', true);
+            Real.Event.sendEvent('','게임이 시작되었습니다!:')
          });
 
       });

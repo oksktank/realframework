@@ -212,8 +212,6 @@
                 var layer = new BirdCatch()
                 var director = Director.sharedDirector
 
-                Real.Event.sendEvent('','게임이 시작되었습니다!')
-
                 scene.addChild(layer)
                 director.replaceScene(scene)
             },this)
@@ -432,11 +430,11 @@
                 {
                     if(this.PlayerMoveStatus[i] == 1 && this.Players[i].sprite.position.x > 27)
                     {
-                        this.Players[i].sprite.position.x = this.Players[i].sprite.position.x - 8
+                        this.Players[i].sprite.position.x = this.Players[i].sprite.position.x - 12
                     }
                     else if(this.PlayerMoveStatus[i] == 2 && this.Players[i].sprite.position.x < 614)
                     {
-                        this.Players[i].sprite.position.x = this.Players[i].sprite.position.x + 8
+                        this.Players[i].sprite.position.x = this.Players[i].sprite.position.x + 12
                     }
                 }
 
