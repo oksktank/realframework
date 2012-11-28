@@ -354,6 +354,12 @@
                 }
                 this.BulletDelay += delay
 
+                //Set Move Delay
+                if(!this.MoveDelay){
+                    this.MoveDelay = 0
+                }
+                this.MoveDelay += delay
+
                 //Set End Timer
                 if(!this.EndTimer){
                     this.EndTimer = 0
@@ -372,13 +378,15 @@
                 }
 
                 //Send Request Player Moves///////////////////////////////
-                if(this.keyMap[37] && this.Players[this.me_num].sprite.position.x > 27)
+                if(this.keyMap[37] && this.Players[this.me_num].sprite.position.x > 27 && this.MoveDelay > 0.2)
                 {
                     this.Players[this.me_num].reqMoveLeft()
+                    this.MoveDelay = 0
                 }
-                if(this.keyMap[39] && this.Players[this.me_num].sprite.position.x < 614)
+                if(this.keyMap[39] && this.Players[this.me_num].sprite.position.x < 614 && this.MoveDelay > 0.2)
                 {
                     this.Players[this.me_num].reqMoveRight()
+                    this.MoveDelay = 0
                 }
 
                 //Send Request Player Fires
