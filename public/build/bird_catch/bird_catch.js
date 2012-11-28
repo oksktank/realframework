@@ -297,11 +297,11 @@
             Real.Game.receiveEvent('LetHimMoveLeft',function(data,th){
                 th.p_num = data
                 console.log(th.Players[th.p_num].sprite)
-                th.Players[th.p_num].sprite.position.x = th.Players[th.p_num].sprite.position.x - 8;
+                th.Players[th.p_num].sprite.position.x = th.Players[th.p_num].sprite.position.x - 12;
             },this)
             Real.Game.receiveEvent('LetHimMoveRight', function(data,th){
                 th.p_num = data
-                th.Players[th.p_num].sprite.position.x = th.Players[th.p_num].sprite.position.x + 8;
+                th.Players[th.p_num].sprite.position.x = th.Players[th.p_num].sprite.position.x + 12;
             },this)
             //Render Player Fires//////////////////////////////////////
             Real.Game.receiveEvent('LetHimFire', function(data,th){
