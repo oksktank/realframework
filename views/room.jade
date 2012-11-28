@@ -54,8 +54,7 @@ block head
             Real.Event.sendEvent($('#name').val(), $('#event').val());
          });
          $('#gameStart').click(function(){
-            Real.Game.sendEvent('gameStart', {val: true});
-            console.log('sending game Start message');
+            Real.Game.sendEvent('LetMeStart', true);
          });
 
       });

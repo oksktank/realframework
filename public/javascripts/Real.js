@@ -16,12 +16,11 @@
         },
         Game:{
             roomName:'',
-            receiveEvent:function(eventName, container){
+            receiveEvent:function(eventName){
                 var socket = Real.getSocket()
-                //이벤트 이름에 해당하는 데이터를 받으면 container에 그 데이터를 옮김
-                //container는 Bird Catch 게임 내에서 할당된 변수를 포인터로 넘겨줌 (ex. this.BLABLA)
                 socket.on(eventName, function(data){
-                    container = data
+                    console.log(eventName + ' : on')
+                    return data;
                 })
             },
             init:function(data){
@@ -37,7 +36,7 @@
             sendEvent:function(eventName,data){
                 //시발 왜 안됨
                 var socket=Real.getSocket();
-                socket.emit(eventName,data);
+                socket.emit(eventName,{room: Real.Game.roomName, val: data});
             }
         },
         User:{

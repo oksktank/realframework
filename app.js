@@ -151,6 +151,13 @@ io.on('connection',function(socket){
             io.sockets.sockets[data.type].emit('whisper', data);
         }
     });
+
+    //게임 관련 부분
+    //스타트 요청 수신
+    socket.on('LetMeStart', function(data){
+        io.sockets.in(data.room).emit('gameStart', 1)
+    })
+
 });
 app.get('/', routes.index);
 app.get('/users', user.list);
