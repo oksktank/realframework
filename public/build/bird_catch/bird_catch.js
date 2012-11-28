@@ -252,11 +252,6 @@
             var s = Director.sharedDirector.winSize
             this.isKeyboardEnabled = true
 
-            //Set Audios
-            var bgm = new Audio('/__jah__/assets/sfx/bgm.mp3')
-            bgm.loop = true
-            bgm.play()
-
             //Set Background Sprite
             var background = new nodes.Sprite({file:'/resource/background.png'})
             background.position = ccp(s.width/2, s.height/2)
@@ -475,8 +470,6 @@
                         isOverlap = geo.rectOverlapsRect(B.sprite.boundingBox, M.sprite.boundingBox)
                         if(isOverlap && !B.IsDead)
                         {
-                            var bird_dieSFX = new Audio('/__jah__/assets/sfx/bird_die.wav')
-                            bird_dieSFX.play()
 
                             if(B.IsSpecial)
                             {
