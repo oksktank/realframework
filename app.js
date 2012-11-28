@@ -2,7 +2,7 @@
 /**
  * Module dependencies.
  */
-/* author : 이한솔 김상훈z 김원석 노원우 */
+/* author : 이한솔 김상훈 김원석 노원우 */
 //git test
 var express = require('express')
     ,socketio=require('socket.io')
@@ -136,19 +136,17 @@ io.on('connection',function(socket){
     socket.on('message', function(data){
          if(data.type == 'public')
         {
-            var nameid=data.name;
+            var nameid = data.name;
             data.name = roomJson[data.room].userList[nameid].id;
             io.sockets.in(data.room).emit('message', data);
         }
         else
         {
             //귓속말 처리
-            var nameid=data.name;
-            var typeid=data.type;
-            console.log(roomJson);
+            var nameid = data.name;
             data.name = roomJson[data.room].userList[nameid].id;
+            var typeid = data.type;
             data.type = roomJson[data.room].userList[typeid].id;
-
             //귓속말 한 사람에게
             data.dir=1;
             io.sockets.sockets[nameid].emit('whisper', data);
