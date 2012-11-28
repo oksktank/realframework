@@ -264,6 +264,8 @@
 
             //Set player sprites
             this.Players = new Array()
+            this.PlayerMoveStatus = new Array(); //0: stop 1: left 2: right
+            this.keyMoveController = ''
             this.me_num = 0 //In the real game, this value will be set by the server
             this.me_name = 'Tester'
 
@@ -295,13 +297,25 @@
 
             //Render Player Moves/////////////////////////////////////
             Real.Game.receiveEvent('LetHimMoveLeft',function(data,th){
+                /*
                 th.p_num = data
-                console.log(th.Players[th.p_num].sprite)
                 th.Players[th.p_num].sprite.position.x = th.Players[th.p_num].sprite.position.x - 12;
+                */
+                var p_num = data
+                th.PlayerMoveStatus[p_num] = 1
+                console.log(th.PlayerMoveStatus)
             },this)
             Real.Game.receiveEvent('LetHimMoveRight', function(data,th){
+                /*
                 th.p_num = data
                 th.Players[th.p_num].sprite.position.x = th.Players[th.p_num].sprite.position.x + 12;
+                */
+                var p_num = data
+                th.PlayerMoveStatus[p_num] = 2
+            },this)
+            Real.Game.receiveEvent('LetHimStop', function(data,th){
+                var p_num = data
+                th.PlayerMoveStatus[p_num] = 0
             },this)
             //Render Player Fires//////////////////////////////////////
             Real.Game.receiveEvent('LetHimFire', function(data,th){
@@ -341,6 +355,11 @@
             keyUp: function(evt)
             {
                 this.keyMap[evt.keyCode] = false
+                if(this.keyMoveController == true)
+                {
+                    Real.Game.sendEvent('LetMeStop', this.me_num)
+                    this.keyMoveController = false
+                }
             },
             GameControl: function(delay)
             {
@@ -378,15 +397,15 @@
                 }
 
                 //Send Request Player Moves///////////////////////////////
-                if(this.keyMap[37] && this.Players[this.me_num].sprite.position.x > 27 && this.MoveDelay > 0.08)
+                if(this.keyMap[37] && this.Players[this.me_num].sprite.position.x > 27 && this.keyMoveController == false)
                 {
                     this.Players[this.me_num].reqMoveLeft()
-                    this.MoveDelay = 0
+                    this.keyMoveController = true
                 }
-                if(this.keyMap[39] && this.Players[this.me_num].sprite.position.x < 614 && this.MoveDelay > 0.08)
+                if(this.keyMap[39] && this.Players[this.me_num].sprite.position.x < 614 && this.keyMoveController == false)
                 {
                     this.Players[this.me_num].reqMoveRight()
-                    this.MoveDelay = 0
+                    this.keyMoveController = true
                 }
 
                 //Send Request Player Fires
@@ -395,6 +414,19 @@
                     //Originally sends fire request to server
                     Real.Game.sendEvent('LetMeFire', this.me_num)
                 }
+                //Player Moves......
+                for(var i = 0; i < this.Players.length; i++)
+                {
+                    if(this.PlayerMoveStatus[i] == 1)
+                    {
+                        this.Players[i].sprite.position.x = this.Players[i].sprite.position.x - 8
+                    }
+                    else if(this.PlayerMoveStatus[i] == 2)
+                    {
+                        this.Players[i].sprite.position.x = this.Players[i].sprite.position.x + 8
+                    }
+                }
+
 
                 //Pick Out Bullets/////////////////////////////////////
                 for(var i = 0; i < this.Bullets.length; i++)

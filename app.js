@@ -194,6 +194,10 @@ io.on('connection',function(socket){
         var num = data.val;
         io.sockets.in(data.room).emit('LetHimMoveLeft', num);
     });
+    socket.on('LetMeStop', function(data){
+        var num = data.val;
+        io.sockets.in(data.room).emit('LetHimStop', num);
+    });
     socket.on('LetMeFire', function(data){
        var num = data.val;
         io.sockets.in(data.room).emit('LetHimFire', num);
