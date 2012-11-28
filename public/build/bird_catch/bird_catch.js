@@ -378,12 +378,12 @@
                 }
 
                 //Send Request Player Moves///////////////////////////////
-                if(this.keyMap[37] && this.Players[this.me_num].sprite.position.x > 27 && this.MoveDelay > 0.2)
+                if(this.keyMap[37] && this.Players[this.me_num].sprite.position.x > 27 && this.MoveDelay > 0.08)
                 {
                     this.Players[this.me_num].reqMoveLeft()
                     this.MoveDelay = 0
                 }
-                if(this.keyMap[39] && this.Players[this.me_num].sprite.position.x < 614 && this.MoveDelay > 0.2)
+                if(this.keyMap[39] && this.Players[this.me_num].sprite.position.x < 614 && this.MoveDelay > 0.08)
                 {
                     this.Players[this.me_num].reqMoveRight()
                     this.MoveDelay = 0
