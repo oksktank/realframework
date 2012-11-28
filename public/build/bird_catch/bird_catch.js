@@ -267,6 +267,9 @@
             //Set player sprites
             this.me_num = Real.Game.Me //In the real game, this value will be set by the server
             this.me_name = Real.Room.userList[Real.getSocket().socket.sessionid].id
+            var lblPlayerName = new Label({string: this.me_name, fontSize: 20,fontColor:'#000000'})
+            lblPlayerName.scaleY = -1
+            lblPlayerName.position = ccp(28,-100)
 
             var NumOfPlayers = Real.Game.userList.length
 
@@ -275,6 +278,8 @@
                 this.Players[i] = new Player(i, this.me_name)
                 this.addChild(this.Players[i].sprite)
             }
+
+            this.Players[this.me_num].sprite.addChild(lblPlayerName)
 
             //Set Birds
             this.Birds = new Array()
