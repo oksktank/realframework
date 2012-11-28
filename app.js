@@ -136,19 +136,25 @@ io.on('connection',function(socket){
     socket.on('message', function(data){
          if(data.type == 'public')
         {
+            var nameid=data.name;
+            data.name = roomJson[data.room].userList[nameid].id;
             io.sockets.in(data.room).emit('message', data);
         }
         else
         {
             //귓속말 처리
+            var nameid=data.name;
+            var typeid=data.type;
+            console.log(roomJson);
+            data.name = roomJson[data.room].userList[nameid].id;
+            data.type = roomJson[data.room].userList[typeid].id;
+
             //귓속말 한 사람에게
             data.dir=1;
-            console.log('귓말');
-            console.log(data);
-            io.sockets.sockets[data.name].emit('whisper', data);
+            io.sockets.sockets[nameid].emit('whisper', data);
             //귓속말 받을 사람에게
             data.dir=0;
-            io.sockets.sockets[data.type].emit('whisper', data);
+            io.sockets.sockets[typeid].emit('whisper', data);
         }
     });
 
