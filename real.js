@@ -148,8 +148,7 @@ exports.env={
                 player[data.room]['player'+nowPlayer.name]=nowPlayer;
                 io.sockets.in(data.room).emit('scoreServer', nowPlayer);
             });
-            socket.on('scoreReset', function(data){
-
+            socket.on('scoreResetClient', function(data){
                 var nowRoom=player[data.room];
                 if(nowRoom==undefined){
                     player[data.room]={};

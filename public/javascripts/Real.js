@@ -240,6 +240,7 @@ function pickOut(array, idx)
                 }
             },
             resetScore:function(score,id){
+                Real.Score.sendScore(0);
                 var socket=Real.getSocket();
                 var name=$("#loginUserId").val();
                 var sessionid=id;
@@ -247,7 +248,7 @@ function pickOut(array, idx)
                     sessionid=socket.socket.sessionid;
                 }
                 if(name!=undefined&&name!='undefined'){
-                    socket.emit('scoreReset',{name: sessionid,score: score,room: Real.Score.roomName});
+                    socket.emit('scoreResetClient',{name: sessionid,score: score,room: Real.Score.roomName});
                 }
             },
             onUserJoin:function(data){
