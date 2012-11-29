@@ -194,6 +194,11 @@ io.on('connection',function(socket){
        var send = data.val;
        io.sockets.in(data.room).emit('SyncBirdDeath', send);
     });
+    socket.on('IAmHere', function(data){
+       var send = data.val;
+       io.sockets.in(data.room).emit('HeIsThere', send);
+    });
+
     /*
     socket.on('GiveMeBirds', function(data){
 
