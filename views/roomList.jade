@@ -19,15 +19,21 @@ block head
     }
     console.log(Real.getSocket().socket);
 block content
-  h1= title
-  p Welcome to #{title}
-  p
-    div(class='input-append')
-        input(class='span2', id='userName',type='text')
-        button(class='btn',type='button',onClick='login()') 로그인
+  .wrap(style='align:center; width:750px; height:500px;')
+      .div(style='text-align:center; float:left; width:550px; padding-top:50px;')
+         img(src='/images/main.png')
+      .input(style='float:left; width:200px;')
+          p
+            div(class='input-append')
+                input(class='span2', id='userName',type='text')
+                button(class='btn btn-success',type='button',onClick='login()')
+                    b 로그인
 
-  p
-    div(class='input-append')
-        input(class='span2',type='text', id='roomName')
-        button(class='btn',name='makeRoom',onClick='Real.RoomList.makeRoom("#roomName")') 방생성
-  div(id='roomListDiv')
+          p
+            div(class='input-append')
+                input(class='span2',type='text', id='roomName')
+                button(class='btn btn-info',name='makeRoom',onClick='Real.RoomList.makeRoom("#roomName")')
+                    b 방생성
+          div(style='height:360px')
+            div(id='roomListDiv', style='height:360px; overflow-y:scroll;')
+      hr
