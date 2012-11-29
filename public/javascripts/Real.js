@@ -198,8 +198,7 @@ function pickOut(array, idx)
                         $('#'+data.name+' #pscore').html(data.score);
                     });
                     socket.on('scoreResetServer',function(data){
-                        console.log('client receive data:', data);
-                        $('#'+data.name+' #pscore').html(data.score);
+                        $('#scoreTable #pscore').html(0);
                     });
                 });
             },
@@ -243,13 +242,7 @@ function pickOut(array, idx)
                 Real.Score.sendScore(0);
                 var socket=Real.getSocket();
                 var name=$("#loginUserId").val();
-                var sessionid=id;
-                if(sessionid==undefined){
-                    sessionid=socket.socket.sessionid;
-                }
-                if(name!=undefined&&name!='undefined'){
-                    socket.emit('scoreResetClient',{name: sessionid,score: score,room: Real.Score.roomName});
-                }
+                    socket.emit('scoreResetClient',{room: Real.Score.roomName});
             },
             onUserJoin:function(data){
                 $('<tr class="gradationBlue2" id='+data.socketId+'><td >'+data.user.id+'</td><td id=pscore>'+0+'</td></tr>').appendTo('#scoreTable');
