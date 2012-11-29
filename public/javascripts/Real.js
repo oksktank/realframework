@@ -196,7 +196,10 @@ function pickOut(array, idx)
                     socket.on('scoreServer',function(data){
                         console.log('client receive data:', data);
                         $('#'+data.name+' #pscore').html(data.score);
-
+                    });
+                    socket.on('scoreResetServer',function(data){
+                        console.log('client receive data:', data);
+                        $('#'+data.name+' #pscore').html(data.score);
                     });
                 });
             },
@@ -213,7 +216,7 @@ function pickOut(array, idx)
             appendScoreTable:function(){
                 var render=$(Real.Score.renderTo);
                 $('<table id="scoreTable"></table>').appendTo(render);
-                $('<tr class="gradationBlue1" style="color: #ffffff;" class="info"><th>'+Real.Score.nameTitle+'</th><th>'+Real.Score.scoreTitle+'</th></tr>').appendTo('#scoreTable');
+                $('<tr class="gradationBlue1" class="info"><th>'+Real.Score.nameTitle+'</th><th>'+Real.Score.scoreTitle+'</th></tr>').appendTo('#scoreTable');
                 /*for(var i =0;i<4;i++){
                  $('<tr id=player'+(i+1)+'><td >player'+(i+1)+'</td><td id=pscore>'+0+'</td></tr>').appendTo('#scoreTable');
                  } */
@@ -234,6 +237,17 @@ function pickOut(array, idx)
                 }
                 if(name!=undefined&&name!='undefined'){
                     socket.emit('scoreClient',{name: sessionid,score: score,room: Real.Score.roomName});
+                }
+            },
+            resetScore:function(score,id){
+                var socket=Real.getSocket();
+                var name=$("#loginUserId").val();
+                var sessionid=id;
+                if(sessionid==undefined){
+                    sessionid=socket.socket.sessionid;
+                }
+                if(name!=undefined&&name!='undefined'){
+                    socket.emit('scoreReset',{name: sessionid,score: score,room: Real.Score.roomName});
                 }
             },
             onUserJoin:function(data){

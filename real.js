@@ -148,6 +148,25 @@ exports.env={
                 player[data.room]['player'+nowPlayer.name]=nowPlayer;
                 io.sockets.in(data.room).emit('scoreServer', nowPlayer);
             });
+            socket.on('scoreReset', function(data){
+
+                var nowRoom=player[data.room];
+                if(nowRoom==undefined){
+                    player[data.room]={};
+                }
+                var nowPlayer=player[data.room]['player'+data.name];
+                if(nowPlayer==undefined){
+                    var newPlayer=data;
+
+                    player[data.room]['player'+data.name]=newPlayer;
+                    nowPlayer=newPlayer;
+                }else{
+                    nowPlayer.score=0;
+                }
+
+                player[data.room]['player'+nowPlayer.name]=nowPlayer;
+                io.sockets.in(data.room).emit('scoreResetServer', nowPlayer);
+            });
             //이벤트
             socket.on('eventClient', function(data){
 

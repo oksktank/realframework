@@ -50,8 +50,8 @@ block head
       Real.Chat.init({renderTo:'#chat', roomName:'#{roomName}', width:'400', height:'230'});
       Real.Game.init({ roomName:'#{roomName}'});
       $(function(){
-         $('#sendScore').click(function(){
-            Real.Score.sendScore($('#score').val());
+         $('#resetScore').click(function(){
+            Real.Score.resetScore();
          });
          $('#sendEvent').click(function(){
             Real.Event.sendEvent($('#name').val(), $('#event').val());
@@ -59,8 +59,8 @@ block head
          $('#gameStart').click(function(){
             Real.Game.sendEvent('LetMeStart', true);
             Real.Event.sendEvent('','게임이 시작되었습니다!:')
-         });
 
+         });
       });
 
 block content
@@ -76,3 +76,4 @@ block content
       div(id='eventDiv')
       input(type='button',class='gradationBlue1',id='gameStart',value='Game Start!')
       input(type='button',class='gradationBlue1',id='gameStart',value='Leave Room!')
+      input(type='button',class='gradationBlue1',id='resetScore',value='reset')
