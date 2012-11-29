@@ -6,10 +6,10 @@
 //git test
 var express = require('express')
     ,socketio=require('socket.io')
-    , routes = require('./routes')
-    , user = require('./routes/user')
-    , http = require('http')
-    , path = require('path')
+  , routes = require('./routes')
+  , user = require('./routes/user')
+  , http = require('http')
+  , path = require('path')
     ,util=require('./routes/util')
     ,room=require('./routes/room')
     , config = require('./config');
@@ -19,29 +19,29 @@ var app = express();
 var RedisStore = require('connect-redis')(express);
 var redis=new RedisStore({host:'yog.io',pass:'ekfrrhrl0'});
 app.configure(function(){
-    app.set('port', process.env.PORT || 3000);
-    app.set('views', __dirname + '/views');
-    app.set('view engine', 'jade');
-    app.use(express.favicon());
-    //app.use(express.logger('dev'));
-    app.use(express.bodyParser());
-    app.use(express.methodOverride());
-    app.use(express.cookieParser());
-    app.use(express.session({store: redis, secret: "team real" })); //이 두줄은 항상 app.router앞에 있어야함
-    app.use(function(req, res, next) {
-        if(req.session==undefined){
-            req.session.loginUser={};
-        }
-        res.locals.session = req.session
-        next();
-    });
-    app.use(app.router);
+  app.set('port', process.env.PORT || 3000);
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'jade');
+  app.use(express.favicon());
+  //app.use(express.logger('dev'));
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(express.cookieParser());
+  app.use(express.session({store: redis, secret: "team real" })); //이 두줄은 항상 app.router앞에 있어야함
+  app.use(function(req, res, next) {
+     if(req.session==undefined){
+        req.session.loginUser={};
+     }
+     res.locals.session = req.session
+     next();
+  });
+  app.use(app.router);
 
-    app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.static(path.join(__dirname, 'public')));
 
 });
 app.configure('development', function(){
-    app.use(express.errorHandler());
+  app.use(express.errorHandler());
 });
 var server=http.createServer(app).listen(app.get('port'), function(){
     console.log("Express server listening on port " + app.get('port'));
@@ -69,25 +69,25 @@ var player = {};
 var loginUserList = {};
 io.on('connection',function(socket){
     socket.on('disconnect',function(){
-        socket.get('room',function(err,room){
-            if(room!=null){
+       socket.get('room',function(err,room){
+           if(room!=null){
 
-                //////////////
-                var index;
-                for(var i = 0; i < roomJson[room].playerStack.length; i++)
-                {
-                    if(roomJson[room].playerStack[i] == socket.id)
-                    {
-                        index = i;
-                        break;
-                    }
-                }
-                roomJson[room].playerStack = pickOut(roomJson[room].playerStack,index);
-                //////////////
-                io.sockets.in(room).emit('leaveUser',{socketId:socket.id,user:roomJson[room].userList[socket.id]});
-                delete roomJson[room].userList[socket.id];
-            }
-        });
+               //////////////
+               var index;
+               for(var i = 0; i < roomJson[room].playerStack.length; i++)
+               {
+                   if(roomJson[room].playerStack[i] == socket.id)
+                   {
+                       index = i;
+                       break;
+                   }
+               }
+               roomJson[room].playerStack = pickOut(roomJson[room].playerStack,index);
+               //////////////
+               io.sockets.in(room).emit('leaveUser',{socketId:socket.id,user:roomJson[room].userList[socket.id]});
+               delete roomJson[room].userList[socket.id];
+           }
+       });
     });
     socket.on('signIn',function(loginUser){
         var id=loginUser.id;
@@ -146,7 +146,7 @@ io.on('connection',function(socket){
 
     ///채팅
     socket.on('message', function(data){
-        if(data.type == 'public')
+         if(data.type == 'public')
         {
             var nameid = data.name;
             data.name = roomJson[data.room].userList[nameid].id;
@@ -187,56 +187,56 @@ io.on('connection',function(socket){
         io.sockets.in(data.room).emit('LetHimStop', num);
     });
     socket.on('LetMeFire', function(data){
-        var num = data.val;
+       var num = data.val;
         io.sockets.in(data.room).emit('LetHimFire', num);
     });
     socket.on('BirdDied', function(data){
-        var send = data.val;
-        io.sockets.in(data.room).emit('SyncBirdDeath', send);
+       var send = data.val;
+       io.sockets.in(data.room).emit('SyncBirdDeath', send);
     });
     socket.on('IAmHere', function(data){
-        var send = data.val;
-        io.sockets.in(data.room).emit('HeIsThere', send);
+       var send = data.val;
+       io.sockets.in(data.room).emit('HeIsThere', send);
     });
 
     /*
-     socket.on('GiveMeBirds', function(data){
+    socket.on('GiveMeBirds', function(data){
 
-     var p;
+        var p;
 
-     var Speeds = {};
-     var Types = {};
-     var Ys = {};
+        var Speeds = {};
+        var Types = {};
+        var Ys = {};
 
-     for(var i = 0; i < 10; i++)
-     {
-     p = Math.random();
-     if(p > 0.95)
-     {
-     Types[i] = 1;
-     Speeds[i] = Math.random() * 2 + 1;
-     }
-     else
-     {
-     Types[i] = 0;
-     Speeds[i] = Math.random() * 3 + 1;
-     }
+        for(var i = 0; i < 10; i++)
+        {
+            p = Math.random();
+            if(p > 0.95)
+            {
+                Types[i] = 1;
+                Speeds[i] = Math.random() * 2 + 1;
+            }
+            else
+            {
+                Types[i] = 0;
+                Speeds[i] = Math.random() * 3 + 1;
+            }
 
-     Ys[i] = Math.floor(250 + Math.random()*200)
-     }
+            Ys[i] = Math.floor(250 + Math.random()*200)
+        }
 
-     io.sockets.in(data.room).emit('BirdProperties', {Speeds:Speeds, Types: Types, Ys:Ys});
+        io.sockets.in(data.room).emit('BirdProperties', {Speeds:Speeds, Types: Types, Ys:Ys});
 
-     });*/
+    });*/
 
 });
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.post('/user/login',function(req,res){
 
-    req.session.loginUser={id:req.body.id};
-    req.session.loginId=req.body.id;
-    res.send(req.session.loginUser);
+   req.session.loginUser={id:req.body.id};
+   req.session.loginId=req.body.id;
+   res.send(req.session.loginUser);
 });
 app.post('/user/getLoginUser',function(req,res){
     res.send(req.session.loginUser);
@@ -252,7 +252,7 @@ app.get('/room/:name',function(req,res){
 
 });
 app.post('/room/getInitialUserList',function(req,res){
-    var roomName=req.body.roomName;
+   var roomName=req.body.roomName;
     if(roomJson[roomName]!=undefined){
         res.send(roomJson[roomName].userList);
     }else{

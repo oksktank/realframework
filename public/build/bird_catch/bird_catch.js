@@ -297,7 +297,6 @@
             this.keyMap = {}
             this.Bullets = new Array
             this.BulletControl = true
-            this.player_num = 0;
 
 
             //Render Player Moves/////////////////////////////////////
@@ -347,7 +346,17 @@
                     th.Bullets = pickOut(th.Bullets, j)
                 }
             },this)
-            ///////////////////////////////////////////////////////////
+            //Synchronize Player Positions//////////////////////////////
+
+            Real.Game.receiveEvent('HeIsThere', function(data,th){
+                var num = data.num
+                var playerPosition = data.position
+                console.log(num)
+                console.log(playerPosition)
+                th.Players[num].sprite.position.x = playerPosition
+            },this)
+
+            ////////////////////////////////////////////////////////////
 
             this.schedule({method:"GameControl", interval: 0.02})
         }
@@ -381,6 +390,20 @@
                 if(this.BulletDelay > 0.5)
                 {
                     this.BulletControl = true
+                }
+
+                //PlayerSyncTimer
+                if(!this.SyncTimer){
+                    this.SyncTimer = 0
+                }
+                this.SyncTimer += delay
+                //Send Player Sync Message
+                if(this.SyncTimer > 5)
+                {
+                    var i = this.me_num
+                    var x = this.Players[i].sprite.position.x
+                    Real.Game.sendEvent('IAmHere', {num: i, position: x})
+                    this.SyncTimer = 0
                 }
 
                 //Set Move Delay
