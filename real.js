@@ -180,35 +180,6 @@ exports.env={
             });
 
             config.env.setGameEvent(socket,io);
-            /*
-             socket.on('GiveMeBirds', function(data){
-
-             var p;
-
-             var Speeds = {};
-             var Types = {};
-             var Ys = {};
-
-             for(var i = 0; i < 10; i++)
-             {
-             p = Math.random();
-             if(p > 0.95)
-             {
-             Types[i] = 1;
-             Speeds[i] = Math.random() * 2 + 1;
-             }
-             else
-             {
-             Types[i] = 0;
-             Speeds[i] = Math.random() * 3 + 1;
-             }
-
-             Ys[i] = Math.floor(250 + Math.random()*200)
-             }
-
-             io.sockets.in(data.room).emit('BirdProperties', {Speeds:Speeds, Types: Types, Ys:Ys});
-
-             });*/
 
         });
         app.get('/', routes.index);
