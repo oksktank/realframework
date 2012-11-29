@@ -8,27 +8,36 @@
 exports.env={
     redis_config:{host:'yog.io',pass:'ekfrrhrl0'},
     port_num:3000,
-    app_init:function(app,express,path){
-        var RedisStore = require('connect-redis')(express);
-        var redis=new RedisStore(exports.env.redis_config);
-        app.set('port', process.env.PORT || exports.env.port_num);
-        app.set('views', __dirname + '/views');
-        app.set('view engine', 'jade');
-        app.use(express.favicon());
-        //app.use(express.logger('dev'));
-        app.use(express.bodyParser());
-        app.use(express.methodOverride());
-        app.use(express.cookieParser());
-        app.use(express.session({store: redis, secret: "team real" })); //이 두줄은 항상 app.router앞에 있어야함
-        app.use(function(req, res, next) {
-            if(req.session==undefined){
-                req.session.loginUser={};
-            }
-            res.locals.session = req.session
-            next();
+    setGameEvent:function(socket,io){
+        //게임 관련 부분
+        //스타트 요청 수신
+        socket.on('LetMeStart', function(data){
+            io.sockets.in(data.room).emit('gameStart', 1);
         });
-        app.use(app.router);
 
-        app.use(express.static(path.join(__dirname, 'public')));
+        socket.on('LetMeMoveRight', function(data){
+            var num = data.val;
+            io.sockets.in(data.room).emit('LetHimMoveRight', num);
+        });
+        socket.on('LetMeMoveLeft', function(data){
+            var num = data.val;
+            io.sockets.in(data.room).emit('LetHimMoveLeft', num);
+        });
+        socket.on('LetMeStop', function(data){
+            var num = data.val;
+            io.sockets.in(data.room).emit('LetHimStop', num);
+        });
+        socket.on('LetMeFire', function(data){
+            var num = data.val;
+            io.sockets.in(data.room).emit('LetHimFire', num);
+        });
+        socket.on('BirdDied', function(data){
+            var send = data.val;
+            io.sockets.in(data.room).emit('SyncBirdDeath', send);
+        });
+        socket.on('IAmHere', function(data){
+            var send = data.val;
+            io.sockets.in(data.room).emit('HeIsThere', send);
+        });
     }
 };
