@@ -34,13 +34,10 @@ block head
           }
     script
       Real.Room.init({roomName:'#{roomName}',onJoinUser:function(dat){
-          console.log('join:');
-          console.log(dat);
           Real.Chat.onUserJoin(dat);
           Real.Score.onUserJoin(dat);
           Real.Game.onUserJoin(dat);
       },onLeaveUser:function(dat){
-          console.log('leave:'+dat);
           Real.Chat.onUserLeave(dat);
           Real.Game.onUserLeave(dat);
           Real.Score.onUserLeave(dat);

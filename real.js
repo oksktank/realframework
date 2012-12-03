@@ -6,22 +6,21 @@
  * To change this template use File | Settings | File Templates.
  */
 exports.env={
-    init:function(){
+    init:function(config){
         var express = require('express');
         var path = require('path');
         var app = express();
         app.configure(function(){
-            exports.env.app_init(app,express,path);
+            exports.env.app_init(app,express,path,config);
         });
         app.configure('development', function(){
             app.use(express.errorHandler());
         });
 
-        exports.env.server_init(app);
+        exports.env.server_init(app,config);
 
     },
-    app_init:function(app,express,path){
-        var config=require('./config');
+    app_init:function(app,express,path,config){
         var RedisStore = require('connect-redis')(express);
         var redis=new RedisStore(config.env.redis_config);
         app.set('port', process.env.PORT || config.env.port_num);
@@ -44,7 +43,7 @@ exports.env={
 
         app.use(express.static(path.join(__dirname, 'public')));
     },
-    server_init:function(app){
+    server_init:function(app,config){
         var express = require('express')
             ,socketio=require('socket.io')
             , routes = require('./routes')
@@ -52,8 +51,7 @@ exports.env={
             , http = require('http')
             , path = require('path')
             ,util=require('./routes/util')
-            ,room=require('./routes/room')
-            ,config=require('./config');
+            ,room=require('./routes/room');
         var server=http.createServer(app).listen(app.get('port'), function(){
             console.log("Express server listening on port " + app.get('port'));
         });
